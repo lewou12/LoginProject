@@ -59,9 +59,9 @@ export async function onRequestGet(context) {
     return new Response('Transação expirada ou inexistente.', { status: 400, headers: { 'Cache-Control': 'no-store' } });
   }
 
-  // 4. Comparar o resumo do state
+// 4. Comparar o resumo do state
   const stateHash = await createHash(state);
-  if (stateHash !== txRecord.state) {
+  if (stateHash !== txRecord.state_hash) {
     return new Response('State inválido.', { status: 400, headers: { 'Cache-Control': 'no-store' } });
   }
 
