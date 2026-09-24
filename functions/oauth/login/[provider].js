@@ -54,8 +54,8 @@ export async function onRequestGet(context) {
   const expiresAt = Math.floor(Date.now() / 1000) + 600;
 
   // 3. Salvar transação no D1 (guardando apenas os hashes para segurança)
-  await context.env.DB.prepare(
-    `INSERT INTO oauth_transactions (id_hash, provider, state, nonce, code_verifier, expires_at)
+await context.env.DB.prepare(
+    `INSERT INTO oauth_transactions (id_hash, provider, state_hash, nonce, code_verifier, expires_at)
      VALUES (?, ?, ?, ?, ?, ?)`
   ).bind(txIdHash, provider, stateHash, nonce, codeVerifier, expiresAt).run();
 
