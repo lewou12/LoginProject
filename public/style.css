@@ -1,0 +1,112 @@
+/* Variáveis de cores para facilitar a manutenção */
+:root {
+  --bg-color: #f3f4f6;
+  --card-bg: #ffffff;
+  --text-main: #1f2937;
+  --text-muted: #6b7280;
+  --border-color: #e5e7eb;
+  --btn-google: #4285f4;
+  --btn-google-hover: #357abd;
+  --btn-github: #24292e;
+  --btn-github-hover: #1b1f23;
+  --btn-logout: #ef4444;
+}
+
+/* Reset básico e centralização do conteúdo na tela */
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+/* Estilo do cartão principal */
+main {
+  background: var(--card-bg);
+  padding: 2.5rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+h1 {
+  font-size: 1.5rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+/* Caixa de destaque para o status da sessão */
+#status {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+  padding: 0.75rem;
+  background-color: #f9fafb;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--border-color);
+  margin: 1.5rem 0;
+}
+
+/* Reset de form para o botão de sair */
+form {
+  margin: 0;
+}
+
+/* Estilo base compartilhado entre links e botões */
+a, button {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+/* Botão do Google */
+a[href*="google"] {
+  background-color: var(--btn-google);
+}
+a[href*="google"]:hover {
+  background-color: var(--btn-google-hover);
+  transform: translateY(-1px);
+}
+
+/* Botão do GitHub */
+a[href*="github"] {
+  background-color: var(--btn-github);
+}
+a[href*="github"]:hover {
+  background-color: var(--btn-github-hover);
+  transform: translateY(-1px);
+}
+
+/* Botão de Logout (Secundário/Destrutivo) */
+button[type="submit"] {
+  background-color: white;
+  color: var(--btn-logout);
+  border: 1px solid var(--btn-logout);
+  margin-bottom: 0; /* É o último elemento */
+}
+button[type="submit"]:hover {
+  background-color: #fef2f2;
+}
