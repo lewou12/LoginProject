@@ -1,0 +1,1 @@
+https://loginproject-aj5.pages.dev/oauth/callback/google

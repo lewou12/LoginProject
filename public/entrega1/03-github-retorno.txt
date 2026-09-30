@@ -1,0 +1,2 @@
+Homepage URL: https://loginproject-aj5.pages.dev/
+Redirect URI: https://loginproject-aj5.pages.dev/oauth/callback/github
