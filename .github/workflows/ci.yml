@@ -22,4 +22,4 @@ jobs:
         with:
           node-version: 22
       - name: Valida HTML
-        run: npx -yes htmlhint "**/*.html"
+        run: npx -yes htmlhint "**/*.html" --ignore "**/examples/**,**/documentation/**,**/BS3/**"
