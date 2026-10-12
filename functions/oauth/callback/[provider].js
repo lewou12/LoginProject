@@ -1,4 +1,4 @@
-// Funções utilitárias de criptografia e descodificação
+// Funções utilitárias de criptografia e descodificaçã
 async function createHash(text) {
   const encoder = new TextEncoder();
   const data = encoder.encode(text);
