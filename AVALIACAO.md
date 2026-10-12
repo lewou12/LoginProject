@@ -1,5 +1,5 @@
 # Avaliação GitHub Actions - Entrega
-**Dupla:** Leonardo Mulhenhoff Borim e [Nome da sua dupla]
+**Nome:** Leonardo Mulhenhoff Borim
 
 ## Tarefa 1: CI a cada commit
 - **Execução Verde:** [COLE O SEU LINK DA EXECUÇÃO VERDE AQUI]
