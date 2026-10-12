@@ -16,13 +16,6 @@ jobs:
         with:
           fetch-depth: 0
           
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          
-      - name: Instala o Copilot CLI
-        run: npm install -g @github/copilot
-        
       - name: Monta o prompt
         run: |
           {
@@ -30,27 +23,37 @@ jobs:
             echo "Aponte, em português e em até 10 itens: segredos expostos,"
             echo "SQL montado por concatenação em vez de prepare().bind(), e erros de lógica."
             echo '```diff'
-            git diff origin/${{ github.base_ref }}...HEAD | head -c 20000
+            git diff origin/${{ github.base_ref }}...HEAD | head -c 10000
             echo '```'
           } > prompt.txt
+
       - name: Debug da API de modelos
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.COPILOT_PAT }}
         run: |
+          echo "Testando a comunicação direta com a API do GitHub Models..."
           curl -sS -i https://models.github.ai/inference/chat/completions \
             -H "Authorization: Bearer $GH_TOKEN" \
             -H "Content-Type: application/json" \
             -H "Accept: application/vnd.github+json" \
             -d '{"model":"openai/gpt-4o-mini","messages":[{"role":"user","content":"diga oi"}],"max_tokens":20}'
+          
       - id: ia
         uses: actions/ai-inference@v1
-        env:
-          COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_PAT }}
+        continue-on-error: true
         with:
           prompt-file: prompt.txt
           system-prompt: Você é um revisor de código objetivo.
+          model: openai/gpt-4o-mini
+          max-tokens: 1500
+          token: ${{ secrets.COPILOT_PAT }}
           
       - name: Comenta no PR
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh pr comment ${{ github.event.pull_request.number }} --body-file "${{ steps.ia.outputs.response-file }}"
+        run: |
+          if [ "${{ steps.ia.outcome }}" == "success" ]; then
+            gh pr comment ${{ github.event.pull_request.number }} --body-file "${{ steps.ia.outputs.response-file }}"
+          else
+            gh pr comment ${{ github.event.pull_request.number }} --body "A Action de IA falhou ao processar a resposta. Por favor, verifique o log do passo 'Debug da API de modelos' no Actions para ver o erro HTTP exato que a Microsoft retornou."
+          fi
