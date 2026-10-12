@@ -33,7 +33,15 @@ jobs:
             git diff origin/${{ github.base_ref }}...HEAD | head -c 20000
             echo '```'
           } > prompt.txt
-          
+      - name: Debug da API de modelos
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          curl -sS -i https://models.github.ai/inference/chat/completions \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Content-Type: application/json" \
+            -H "Accept: application/vnd.github+json" \
+            -d '{"model":"openai/gpt-4o-mini","messages":[{"role":"user","content":"diga oi"}],"max_tokens":20}'
       - id: ia
         uses: actions/ai-inference@v1
         env:
