@@ -32,7 +32,7 @@ cid	name	type	notnull	dflt_value	pk
 0	id	INT	0	<null>	0
 1	observacao	TEXT	0	<null>	0
 ```
-- **Prova do segundo merge sem execução:** 
+- **Prova do segundo merge sem execução:--** 
 
 ---
 
