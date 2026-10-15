@@ -1,0 +1,1 @@
+ALTER TABLE teste ADD COLUMN observacao TEXT;
