@@ -2,21 +2,21 @@
 **Nome:** Leonardo Mulhenhoff Borim
 
 ## Tarefa 1: CI a cada commit
-- **Execução Verde: ---** 
-- **Execução Vermelha:** https://github.com/lewou12/LoginProject/actions/runs/38293796780
-- **Erro detectado no log:** `Error: near "INT": syntax error` (ajuste se o log exibiu diferente)
+- **Execução Verde:** https://github.com/lewou12/LoginProject/pull/17/checks?sha=965815a7fbcefeff2e6d6f9515abd2b7f64d7053
+- **Execução Vermelha:** https://github.com/lewou12/LoginProject/pull/17/checks?sha=24fd93631d718b5050c5576e6720bddcf646b37a
+- **Erro detectado no log:** `Parse error near line 1: incomplete input`
 - **Por que testar no SQLite local antes do D1?** Testar no banco SQLite em um ambiente isolado e descartável (CI) garante que eventuais erros de sintaxe ou lógicos nas migrações sejam detectados e barrados gratuitamente antes que qualquer código inválido chegue a corromper o banco D1 que está em produção.
 
 ## Tarefa 2: Proteger a main com o CI
-- **PR Bloqueado:** https://github.com/lewou12/LoginProject/pull/1
-- **PR Liberado:** [COLE O LINK DO PR VERDE/LIBERADO AQUI]
+- **PR Bloqueado:** https://github.com/lewou12/LoginProject/pull/17/checks?sha=24fd93631d718b5050c5576e6720bddcf646b37a
+- **PR Liberado:** https://github.com/lewou12/LoginProject/pull/17/checks?sha=965815a7fbcefeff2e6d6f9515abd2b7f64d7053
 - **Saída do `git push` recusado:** 
 ```text
 main (push declined due to repository rule violations)
 ```
 
 ## Tarefa 3: Revisão de PR por IA
-- **PR com os 2 comentários da IA:** [COLE O LINK DO SEU PR COM OS DOIS COMENTÁRIOS DA IA]
+- **PR com os 2 comentários da IA:** https://github.com/lewou12/LoginProject/pull/17
 - **Log do erro de permissão (pull-requests: write removido):**
 ```text
 HttpError: Resource not accessible by integration - 403 Forbidden
