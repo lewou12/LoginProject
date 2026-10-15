@@ -1,0 +1,1 @@
+ALTER TABLE tabela_erro ADD COLUMN observacao TEXT;
