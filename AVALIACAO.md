@@ -2,7 +2,7 @@
 **Nome:** Leonardo Mulhenhoff Borim
 
 ## Tarefa 1: CI a cada commit
-- **Execução Verde:** 
+- **Execução Verde: ..** 
 - **Execução Vermelha:** https://github.com/lewou12/LoginProject/actions/runs/38293796780
 - **Erro detectado no log:** `Error: near "INT": syntax error` (ajuste se o log exibiu diferente)
 - **Por que testar no SQLite local antes do D1?** Testar no banco SQLite em um ambiente isolado e descartável (CI) garante que eventuais erros de sintaxe ou lógicos nas migrações sejam detectados e barrados gratuitamente antes que qualquer código inválido chegue a corromper o banco D1 que está em produção.
