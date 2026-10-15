@@ -1,4 +1,5 @@
 name: revisao-ia
+
 on:
   pull_request:
     types: [opened, synchronize]
@@ -6,68 +7,39 @@ on:
 permissions:
   contents: read
   pull-requests: write
-  models: read
 
 jobs:
   revisar:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
-          
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+
+      - name: Instala Copilot CLI
+        run: npm install -g @github/copilot
+
       - name: Monta o prompt
         run: |
           {
             echo "Revise o diff de um site com Cloudflare Pages Functions e D1."
             echo "Aponte, em português e em até 10 itens: segredos expostos,"
             echo "SQL montado por concatenação em vez de prepare().bind(), e erros de lógica."
-            echo '```diff'
-            git diff origin/${{ github.base_ref }}...HEAD | head -c 3000
-            echo '```'
+            echo 'diff'
+            git diff origin/${{ github.base_ref }}...HEAD | head -c 20000
+            echo ''
           } > prompt.txt
 
-      - id: ia_oficial
-        uses: actions/ai-inference@v1
-        continue-on-error: true
-        with:
-          prompt-file: prompt.txt
-          system-prompt: Você é um revisor de código objetivo.
-          model: openai/gpt-4o-mini
-          max-tokens: 1000
-          token: ${{ secrets.COPILOT_PAT }}
-
-      - name: Chama a IA diretamente (Bypass Seguro)
+      - name: Executa revisão com Copilot
         env:
           GH_TOKEN: ${{ secrets.COPILOT_PAT }}
-        run: |
-          # 1. Empacota o prompt num JSON válido
-          jq -n --rawfile p prompt.txt \
-            '{model:"openai/gpt-4o-mini",
-              messages:[{role:"system",content:"Você é um revisor de código objetivo."},
-                        {role:"user",content:$p}],
-              max_tokens:1000}' > req.json
-              
-          # 2. Dispara contra a API e guarda a resposta numa variável
-          RAW_RESPONSE=$(curl -sS https://models.github.ai/inference/chat/completions \
-            -H "Authorization: Bearer $GH_TOKEN" \
-            -H "Content-Type: application/json" \
-            -H "Accept: application/vnd.github+json" \
-            -d @req.json)
-            
-          # 3. O Tratamento de Segurança: Testa se a resposta é um JSON válido
-          if echo "$RAW_RESPONSE" | jq -e . >/dev/null 2>&1; then
-            echo "$RAW_RESPONSE" | jq -r '.choices[0].message.content' > resposta.md
-          else
-            # Se a API quebrar e devolver "OK", nós avisamos no PR e salvamos o fluxo!
-            echo "### ⚠️ Revisão Automática (Fallback)" > resposta.md
-            echo "A API oficial do GitHub Models (Plano Student) bloqueou a leitura devido ao limite de tokens do firewall, retornando a resposta em branco: \`$RAW_RESPONSE\`." >> resposta.md
-            echo "" >> resposta.md
-            echo "No entanto, a validação de segurança acusa a presença de uma vulnerabilidade no código:" >> resposta.md
-            echo "- **SQL Injection:** O uso de concatenação de strings na query SQL é perigoso. Substitua por \`env.DB.prepare(\"...\").bind(...)\`." >> resposta.md
-          fi
+        run: copilot -p "$(cat prompt.txt)" -s --no-ask-user > resposta.txt
 
       - name: Comenta no PR
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh pr comment ${{ github.event.pull_request.number }} --body-file "resposta.md"
+        run: gh pr comment ${{ github.event.pull_request.number }} --body-file resposta.txt
