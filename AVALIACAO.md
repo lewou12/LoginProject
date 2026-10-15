@@ -24,13 +24,15 @@ HttpError: Resource not accessible by integration - 403 Forbidden
 - **Crítica à IA (Afirmação errada ou irrelevante):** Em um dos nossos testes, a IA exigiu a importação e a instanciação manual do banco de dados no arquivo, sugerindo isso como uma vulnerabilidade/falha. No entanto, ela ignorou completamente a arquitetura de nuvem do nosso projeto (Cloudflare Pages Functions), onde o objeto `env` contendo a *binding* do banco D1 é injetado dinamicamente pelo próprio *runtime*, sem exigir importações no código, provando que a IA carece de contexto estrutural do ecossistema.
 
 ## Tarefa 4: Migrações D1 depois do merge (+ Bônus)
-- **Execução do Merge (Workflow rodou):** [COLE O LINK DA EXECUÇÃO DO FLUXO MIGRAR AQUI]
-- **Resumo por IA (Bônus):** O resumo gerado pela IA sobre as migrações aplicadas está visível no `$GITHUB_STEP_SUMMARY` do link da execução acima.
+- **Execução do Merge (Workflow rodou):** https://github.com/lewou12/LoginProject/pull/19
+- **Resumo por IA (Bônus):** O resumo gerado pela IA sobre as migrações aplicadas está visível no link da execução acima.
 - **Saída do comando PRAGMA table_info:**
 ```text
-[COLE AQUI A SAÍDA DO COMANDO MOSTRANDO A COLUNA NOVA]
+cid	name	type	notnull	dflt_value	pk
+0	id	INT	0	<null>	0
+1	observacao	TEXT	0	<null>	0
 ```
-- **Prova do segundo merge sem execução:** [COLE AQUI O LINK DO PR OU PRINT ONDE O FLUXO MIGRAR FOI IGNORADO DEVIDO AO FILTRO DE PATHS NO README]
+- **Prova do segundo merge sem execução:** 
 
 ---
 
