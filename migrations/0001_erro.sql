@@ -1,1 +1,1 @@
-CREATE TABLE teste (id INT
+CREATE TABLE teste (id INT)
