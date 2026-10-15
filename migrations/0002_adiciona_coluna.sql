@@ -1,1 +1,1 @@
-ALTER TABLE sessoes ADD COLUMN status TEXT;
+ALTER TABLE teste ADD COLUMN status TEXT;
