@@ -1,1 +1,1 @@
-ALTER TABLE tabela_erro ADD COLUMN observacao TEXT;
+ALTER TABLE teste ADD COLUMN observacao TEXT;
